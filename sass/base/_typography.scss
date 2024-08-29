@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "Montserrat"; 
+  src: url("../fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--white-color-text);
+  letter-spacing: 0.1rem;
+  font-weight: normal;
+}
+
+a:link,
+a:visited {
+  color: var(--white-color-text);
+  text-decoration: none;
+}
+
+.svg {
+  height: 2rem;
+  fill: none;
+  stroke: var(--white-color-text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.15rem;
+}
+
+.text{
+  font-size: 1.3rem;
+  line-height: 120%;
+}
+
+.text--centred{
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.header{
+  font-size: 1.3rem;
+}
+
+.heading{
+  font-size: 4.5rem;
+  text-align: center;
+  @media only screen and (max-width: 500px) {
+    font-size: 3.5rem;
+  }
+}
+
+.label{
+  font-size: 2.2rem;
+  text-align: center;
+  line-height: 120%;
+}
+
+.label--smaller{
+  font-size: 1.6rem;
+}

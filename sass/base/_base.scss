@@ -1,0 +1,46 @@
+*{padding: 0;margin: 0;border: 0;}
+*,*:before,*:after{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+:focus,:active {outline: none;}
+a:focus,a:active {outline: none;}
+nav,footer,header,aside {display: block;}
+html,body {height: 100%;width: 100%;font-size: 100%;line-height: 1;-ms-text-size-adjust: 100%;-moz-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;}
+input,button,textarea {font-family: inherit;}
+input::-ms-clear {display: none;}
+button {cursor: pointer;}
+button::-moz-focus-inner {padding: 0;border: 0;}
+a,a:visited {text-decoration: none;}
+a:hover {text-decoration: none;}
+li {list-style: none;}
+li {list-style-type: none;}
+img {vertical-align: top;}
+h1,h2,h3,h4,h5,h6 {font-size: inherit;font-weight: inherit;}
+
+html {
+  @media only screen and (min-width: 2800px) {
+    font-size: 100%;
+  }
+  @media only screen and (max-width: 2800px) {
+    font-size: 87.5%;
+  }
+  @media only screen and (max-width: 2200px) {
+    font-size: 75%;
+  }
+  @media only screen and (max-width: 1600px) {
+    font-size: 62.5%;
+  }
+  @media only screen and (max-width: 1200px) {
+    font-size: 50%;
+  }
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100vh;
+}
