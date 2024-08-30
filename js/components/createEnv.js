@@ -1,20 +1,17 @@
 class CreateEnvironment {
   #data;
-  #env;
 
   constructor(data) {
     this.#data = data;
-    this.#env;
     this.#initEnvironment();
   }
 
   #initEnvironment() {
-    console.log("Creating environment...");
     this.#createEnv();
   }
 
   #createEnv() {
-    this.#env = {};
+    this.env = {};
     this.#setDifficulty();
     this.#setCatastrophe();
     this.#setPopulation();
@@ -25,51 +22,50 @@ class CreateEnvironment {
   #setDifficulty(){
     let timeToSurvive, difficultyType;
     [timeToSurvive,difficultyType] = this.#createRandomInIntervals(this.#data.difficulty);
-    console.log(this.#data[`${difficultyType}`]);
-    
-    let catastropheType = this.#createRandomInIntervals(this.#data[`${difficultyType}`])
-    console.log(catastropheType);
-    
-    
     let formattedTimeToSurvive = this.#formatTime(timeToSurvive);
+    let catastropheType = this.#createRandomInIntervals(this.#data[`${difficultyType}`])
 
-    this.#env.difficultyType = difficultyType;
-    this.#env.timeToSurvive = timeToSurvive;
-    this.#env.formattedTimeToSurvive = formattedTimeToSurvive;
+    this.env.difficultyType = difficultyType;
+    this.env.timeToSurvive = timeToSurvive;
+    this.env.formattedTimeToSurvive = formattedTimeToSurvive;
+    this.env.catastropheType = catastropheType;
   }
 
   #setCatastrophe(){
-    let catastrophe = this.#createRandomInIntervals(this.#data[`${this.#env.difficultyType}`].catastrophe);
-    let infrastructure = this.#createRandomInIntervals(this.#data[`${this.#env.difficultyType}`].infrastructure);
-    let vegetation = this.#createRandomInIntervals(this.#data[`${this.#env.difficultyType}`].vegetation);
-
-    this.#env.catastrophe = catastrophe;
-    this.#env.infrastructure = infrastructure;
-    this.#env.vegetation = vegetation;
+    let catastrophe = this.#createRandomInIntervals(this.env.catastropheType.catastrophe);
+    let infrastructure = this.#createRandomInIntervals(this.env.catastropheType.infrastructure);
+    let vegetation = this.#createRandomInIntervals(this.env.catastropheType.vegetation);
+    
+    this.env.catastrophe = catastrophe;
+    this.env.infrastructure = infrastructure;
+    this.env.vegetation = vegetation;
   }
 
   #setPopulation(){
-    let population = (this.#createRandomInIntervals(this.#data.population))-0;
+    let population = this.#createRandomInIntervals(this.#data.population);
     let formattedPopulation = this.#formatPopulation(population)
 
-    let diedPopulation = (population *this.#createRandomInIntervals(this.#data[`${this.#env.difficultyType}`].population)) / 100;
+    let diedPopulation = 
+    (population *this.#createRandomInIntervals(this.env.catastropheType.population)) / 100;
     let formattedDiedPopulation = this.#formatPopulation(diedPopulation);
 
-    this.#env.population = population;
-    this.#env.formattedPopulation = formattedPopulation;
-    this.#env.diedPopulation = diedPopulation;
-    this.#env.formattedDiedPopulation = formattedDiedPopulation;
+    this.env.population = population;
+    this.env.formattedPopulation = formattedPopulation;
+    this.env.diedPopulation = diedPopulation;
+    this.env.formattedDiedPopulation = formattedDiedPopulation;
   }
 
   #printEnv(){
     let text = `
-      ${this.#env.catastrophe} happened in ${this.#env.activeCountry.name}, ${this.#env.activeCity.name}\n
-      We need to survive for ${this.#env.formattedTimeToSurvive}, 
-      From ${this.#env.formattedPopulation}, ${this.#env.formattedDiedPopulation} people died, 
-      ${this.#env.infrastructure}% of world infrastructure was destroyed, 
-      ${this.#env.vegetation}% of world vegetation was destroyed`
-    console.log(text);
-    console.log(this.#env);
+      ${this.env.catastrophe} happened!\n
+      Originated in ${this.env.activeCountry.name}, ${this.env.activeCity.name}, 
+      and spread across the whole world. 
+      You need to get in the bunker\n
+      We need to survive for ${this.env.formattedTimeToSurvive}, 
+      From ${this.env.formattedPopulation}, ${this.env.formattedDiedPopulation} people died, 
+      ${this.env.infrastructure}% of world infrastructure was destroyed, 
+      ${this.env.vegetation}% of world vegetation was destroyed`
+    this.env.text = text;
   }
 
   #formatTime(time){
@@ -120,10 +116,9 @@ class CreateEnvironment {
     const activeCountry = countries[Math.floor(Math.random()*countries.length)]
     const activeCity = activeCountry.cities[Math.floor(Math.random()*activeCountry.cities.length)]
 
-    this.#env.activeCity = activeCity;
-    this.#env.activeCountry = activeCountry;
-    this.#env.countries = countries;
-    console.log(countries);
+    this.env.activeCity = activeCity;
+    this.env.activeCountry = activeCountry;
+    this.env.countries = countries;
   }
 
   #randomFunction(data, max, min = 0) {
@@ -149,10 +144,11 @@ class CreateEnvironment {
         }
         randomProb -= arg.prob;
       } else {
-        console.log(5);
-        console.log(arg.value);
-        
-        if (randomProb < arg.prob) return this.#randomFunction(arg.value);
+        if (randomProb < arg.prob) {
+          if (Array.isArray(arg.value)) return this.#randomFunction(arg.value);
+          if (typeof arg.value === 'object') return arg.value;
+          else return this.#randomFunction(arg.value);
+        }
         randomProb -= arg.prob;
       }
     }

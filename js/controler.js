@@ -3,6 +3,9 @@
 const startPage = async function (state) {};
 
 import CreateEnvironment from "./components/createEnv.js";
+import CreatePlayers from "./components/createPlayers.js";
+
+import MapView from "./views/mapView.js"
 
 
 
@@ -200,124 +203,76 @@ let data = {
 
     easy : [
       {prob:4,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Tornado', 'Flood', 'Wildfire', 'Drought', 'Hurricane', 'Landslide',]},
-        ],
-        population: [
-          {start:1,end:3}
-        ],
-        vegetation: [
-          {start:10,end:25}
-        ],
-        infrastructure: [
-          {start:5,end:15}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Tornado', 'Flood', 'Wildfire', 'Drought', 'Hurricane', 'Landslide',]
+        }],
+        population: [{start:1,end:3}],
+        vegetation: [{start:10,end:25}],
+        infrastructure: [{start:5,end:15}],
       }},
+
       {prob:1,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Virus outbreak','Uprising']}
-        ],
-        population: [
-          {start:5,end:15}
-        ],
-        vegetation: [
-          {start:1,end:3}
-        ],
-        infrastructure: [
-          {start:15,end:35}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Virus outbreak','Uprising']
+        }],
+        population: [{start:5,end:15}],
+        vegetation: [{start:1,end:3}],
+        infrastructure: [{start:15,end:35}],
       }},
-      
     ],
     medium : [
       {prob:4,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Cyclone', 'Chemical spill', 'Radiation leak','Ozone layer damage',]},
-        ],
-        population: [
-          {start:5,end:15}
-        ],
-        vegetation: [
-          {start:20,end:50}
-        ],
-        infrastructure: [
-          {start:15,end:35}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Cyclone', 'Chemical spill', 'Radiation leak','Ozone layer damage',]
+        },],
+        population: [{start:5,end:15}],
+        vegetation: [{start:20,end:50}],
+        infrastructure: [{start:15,end:35}],
       }},
       {prob:1,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Earthquake','Infrastructure collapse',]}
-        ],
-        population: [
-          {start:5,end:15}
-        ],
-        vegetation: [
-          {start:5,end:15}
-        ],
-        infrastructure: [
-          {start:65,end:85}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Earthquake','Infrastructure collapse',]
+        }],
+        population: [{start:5,end:15}],
+        vegetation: [{start:5,end:15}],
+        infrastructure: [{start:65,end:85}],
       }},
     ],
     hard : [
       {prob:4,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Volcanic eruption','Tsunami', 'Extreme heat', 'Extreme cold',]},
-        ],
-        population: [
-          {start:55,end:65}
-        ],
-        vegetation: [
-          {start:85,end:95}
-        ],
-        infrastructure: [
-          {start:75,end:95}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Volcanic eruption','Tsunami', 'Extreme heat', 'Extreme cold',]
+        },],
+        population: [{start:55,end:65}],
+        vegetation: [{start:85,end:95}],
+        infrastructure: [{start:75,end:95}],
       }},
       {prob:1,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Alien invasion','AI rebellion',]}
-        ],
-        population: [
-          {start:65,end:85}
-        ],
-        vegetation: [
-          {start:15,end:45}
-        ],
-        infrastructure: [
-          {start:75,end:95}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Alien invasion','AI rebellion',]
+        }],
+        population: [{start:65,end:85}],
+        vegetation: [{start:15,end:45}],
+        infrastructure: [{start:75,end:95}],
       }},
       
     ],
     extreme : [
       {prob:4,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Meteor strike', 'Nuclear disaster',]},
-        ],
-        population: [
-          {start:92,end:98}
-        ],
-        vegetation: [
-          {start:95,end:100}
-        ],
-        infrastructure: [
-          {start:95,end:100}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Meteor strike', 'Nuclear disaster',]
+        },],
+        population: [{start:92,end:98}],
+        vegetation: [{start:95,end:100}],
+        infrastructure: [{start:95,end:100}],
       }},
       {prob:1,value:{
-        catastrophe : [
-          {prob:1,epicentr:'country',value:['Zombie apocalypse',]}
-        ],
-        population: [
-          {start:99,end:100}
-        ],
-        vegetation: [
-          {start:55,end:75}
-        ],
-        infrastructure: [
-          {start:65,end:85}
-        ],
+        catastrophe : [{
+          prob:1,epicentr:'country',value:['Zombie apocalypse',]
+        }],
+        population: [{start:99,end:100}],
+        vegetation: [{start:55,end:75}],
+        infrastructure: [{start:65,end:85}],
       }},
     ],
    
@@ -333,142 +288,26 @@ let data = {
   },
 }
 
-let createEnv = new CreateEnvironment(data.envData);
 
 class Game {
-  #PlayersCount;
-  #players;
-  #data;
-  #connectFriends = [];
   constructor(data) {
-    this.#PlayersCount = 6;
-    this.#players = [];
-    this.#connectFriends;
-
-    this.#data = data;
+    this.data = data;
     this.#initGame();
   }
 
   #initGame() {
-    console.log("Starting the game...");
-    this.#createPlayers();
-    this.#makeFriends();
-    this.#createMap();
-    console.log(this.#players);
-  }
-
-  #createPlayers() {
-    for (let i = 0; i < this.#PlayersCount; i++) {
-      const gender = this.#randomFunction(this.#data.userData.gender);
-      const ageArr = this.#createRandomInIntervals(this.#data.userData.age);
-      let age = ageArr[0];
-      let ageType = ageArr[1];
-       
-      const player = {
-        id: i,
-        gender: gender,
-        friends: [],
-        name: `${this.#randomFunction(this.#data.userData[`name${gender}`])} ${this.#randomFunction(this.#data.userData.surname)}`,
-        age: age,
-
-        profession: this.#createRandomInIntervals(this.#data.userData[`${ageType}`].profession),
-        health: this.#createRandomInIntervals(this.#data.userData[`${ageType}`].disease),
-        sex: this.#createRandomInIntervals(this.#data.userData[`${ageType}`].sex),
-        
-      };
-    
-      this.#players.push(player);
-    }
-  }
-
-  #randomFunction(data, max, min = 0) {
-    const range = data ? data.length : max;
-    const randomNumber = Math.trunc(Math.random() * (range - min) + min);
-    return data ? data[randomNumber] : randomNumber;
-  }
-
-  #createRandomInIntervals(args){
-    let totalProb = args.reduce((sum, arg) => sum + arg.prob, 0);
-    let randomProb = Math.random() * totalProb;
-    let result;
+    //console.log("Starting the game...");
+    let createEnv = new CreateEnvironment(data.envData);
+    let createPlayers = new CreatePlayers(data.userData);
+    let mapView = new MapView(data.envData);
+    //console.log(createEnv.env.text);
+    //console.log(createPlayers.players);
     
     
-    for (let arg of args) {
-      if (arg.start) {
-        if (randomProb < arg.prob) {
-          result = Math.trunc(Math.random() * (arg.end - arg.start) + arg.start);          
-          return [result,arg.value];
-        }
-        if (!arg.prob) {
-          result = (Math.random() * (arg.end - arg.start) + arg.start).toFixed(2);          
-          return result;
-        }
-        randomProb -= arg.prob;
-      }
-      
-      else {        
-        if (randomProb < arg.prob) {          
-          return this.#randomFunction(arg.value);
-        }
-        randomProb -= arg.prob;
-        
-      }    
-    }
-  }
-
-  #makeFriends(){
-    let conectionsNum = Math.floor(this.#players.length / 2);
-    let randomConectionNum = Math.trunc(Math.random()*3+conectionsNum-2);
-    this.#createCons(this.#players, randomConectionNum);
-    this.#assignFriends();
-  }
-
-  #createCons(players,num){
-    for (let i = 0; i < num; i++) {
-      this.#connectFriends.push(this.#randomConection(players, this.#connectFriends))
-    }
-  }
-
-  #assignFriends(){
-    this.#connectFriends.forEach(con => {
-      con[0].friends.push(`${con[1].name}`);
-      con[1].friends.push(`${con[0].name}`);
-    });
-  }
-
-  #randomConection(players,prevCons){
-    let consTemp = [];
-    let newCon = this.#createConection(players);
-    consTemp.push(newCon);
-    
-    players = players.filter((player) => player.id !== newCon.id);
-    newCon = this.#createConection(players);
-    consTemp.push(newCon);
-  
-    prevCons.map(con=>{
-      if (this.#areArraysSimilar(con, consTemp)){
-        return consTemp = this.#randomConection(players, prevCons)
-      }
-    })
-    return consTemp;
-  }
-
-  #createConection(players){
-    return players[Math.trunc(Math.random() * players.length)];
-  }
-
-  #areArraysSimilar(arr1, arr2) {
-    return (
-      (arr1[0].id === arr2[0].id && arr1[1].id === arr2[1].id) ||
-      (arr1[0].id === arr2[1].id && arr1[1].id === arr2[0].id)
-    );
-  }
-
-  #createMap(){
-    let map = document.querySelector('.map')
-    console.log(map);
     
   }
+
+ 
 }
 
 let game = new Game(data);
