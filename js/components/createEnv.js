@@ -15,7 +15,6 @@ class CreateEnvironment {
 
   #createEnv() {
     this.#env = {};
-
     this.#setDifficulty();
     this.#setCatastrophe();
     this.#setPopulation();
@@ -26,6 +25,12 @@ class CreateEnvironment {
   #setDifficulty(){
     let timeToSurvive, difficultyType;
     [timeToSurvive,difficultyType] = this.#createRandomInIntervals(this.#data.difficulty);
+    console.log(this.#data[`${difficultyType}`]);
+    
+    let catastropheType = this.#createRandomInIntervals(this.#data[`${difficultyType}`])
+    console.log(catastropheType);
+    
+    
     let formattedTimeToSurvive = this.#formatTime(timeToSurvive);
 
     this.#env.difficultyType = difficultyType;
@@ -131,11 +136,11 @@ class CreateEnvironment {
     let totalProb = args.reduce((sum, arg) => sum + arg.prob, 0);
     let randomProb = Math.random() * totalProb;
     let result;
-
+    
     for (let arg of args) {
       if (arg.start) {
         if (randomProb < arg.prob) {
-          result = Math.trunc(Math.random() * (arg.end - arg.start) + arg.start);
+          result = Math.trunc(Math.random() * (arg.end - arg.start) + arg.start);          
           return [result, arg.value];
         }
         if (!arg.prob) {
@@ -144,6 +149,9 @@ class CreateEnvironment {
         }
         randomProb -= arg.prob;
       } else {
+        console.log(5);
+        console.log(arg.value);
+        
         if (randomProb < arg.prob) return this.#randomFunction(arg.value);
         randomProb -= arg.prob;
       }

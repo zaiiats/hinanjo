@@ -198,62 +198,128 @@ let data = {
       ],
     },
 
-    easy : {
-      catastrophe : [
-        {prob:1,value:['Tornado', 'Virus outbreak','Flood', 'Wildfire', 'Drought' , 'Avalanche', 'Hurricane', 'Landslide', 'Sandstorm', 'Uprising']}
-      ],
-      population: [
-        {start:2,end:5}
-      ],
-      vegetation: [
-        {start:2,end:5}
-      ],
-      infrastructure: [
-        {start:2,end:5}
-      ],
-    },
-    medium : {
-      catastrophe : [
-        {prob:1,value:['Earthquake', 'Cyclone', 'Chemical spill', 'Radiation leak','Infrastructure collapse','Ozone layer damage',]}
-      ],
-      population: [
-        {start:5,end:15}
-      ],
-      vegetation: [
-        {start:5,end:15}
-      ],
-      infrastructure: [
-        {start:5,end:15}
-      ],
-    },
-    hard: {
-      catastrophe : [
-        {prob:1,value:['Volcanic eruption','Tsunami', 'Alien invasion', 'Meteor strike', 'Extreme heat', 'Extreme cold', 'AI rebellion',]}
-      ],
-      population: [
-        {start:15,end:65}
-      ],
-      vegetation: [
-        {start:15,end:65}
-      ],
-      infrastructure: [
-        {start:15,end:65}
-      ],
-    },
-    extreme: {
-      catastrophe : [
-        {prob:1,value:['Zombie apocalypse', 'Nuclear disaster',]}
-      ],
-      population: [
-        {start:65,end:99}
-      ],
-      vegetation: [
-        {start:65,end:99}
-      ],
-      infrastructure: [
-        {start:65,end:99}
-      ],
-    },
+    easy : [
+      {prob:4,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Tornado', 'Flood', 'Wildfire', 'Drought', 'Hurricane', 'Landslide',]},
+        ],
+        population: [
+          {start:1,end:3}
+        ],
+        vegetation: [
+          {start:10,end:25}
+        ],
+        infrastructure: [
+          {start:5,end:15}
+        ],
+      }},
+      {prob:1,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Virus outbreak','Uprising']}
+        ],
+        population: [
+          {start:5,end:15}
+        ],
+        vegetation: [
+          {start:1,end:3}
+        ],
+        infrastructure: [
+          {start:15,end:35}
+        ],
+      }},
+      
+    ],
+    medium : [
+      {prob:4,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Cyclone', 'Chemical spill', 'Radiation leak','Ozone layer damage',]},
+        ],
+        population: [
+          {start:5,end:15}
+        ],
+        vegetation: [
+          {start:20,end:50}
+        ],
+        infrastructure: [
+          {start:15,end:35}
+        ],
+      }},
+      {prob:1,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Earthquake','Infrastructure collapse',]}
+        ],
+        population: [
+          {start:5,end:15}
+        ],
+        vegetation: [
+          {start:5,end:15}
+        ],
+        infrastructure: [
+          {start:65,end:85}
+        ],
+      }},
+    ],
+    hard : [
+      {prob:4,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Volcanic eruption','Tsunami', 'Extreme heat', 'Extreme cold',]},
+        ],
+        population: [
+          {start:55,end:65}
+        ],
+        vegetation: [
+          {start:85,end:95}
+        ],
+        infrastructure: [
+          {start:75,end:95}
+        ],
+      }},
+      {prob:1,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Alien invasion','AI rebellion',]}
+        ],
+        population: [
+          {start:65,end:85}
+        ],
+        vegetation: [
+          {start:15,end:45}
+        ],
+        infrastructure: [
+          {start:75,end:95}
+        ],
+      }},
+      
+    ],
+    extreme : [
+      {prob:4,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Meteor strike', 'Nuclear disaster',]},
+        ],
+        population: [
+          {start:92,end:98}
+        ],
+        vegetation: [
+          {start:95,end:100}
+        ],
+        infrastructure: [
+          {start:95,end:100}
+        ],
+      }},
+      {prob:1,value:{
+        catastrophe : [
+          {prob:1,epicentr:'country',value:['Zombie apocalypse',]}
+        ],
+        population: [
+          {start:99,end:100}
+        ],
+        vegetation: [
+          {start:55,end:75}
+        ],
+        infrastructure: [
+          {start:65,end:85}
+        ],
+      }},
+    ],
    
     difficulty : [
       {start:5,end:24,prob:3,value:'easy'},
