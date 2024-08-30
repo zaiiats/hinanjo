@@ -5,43 +5,30 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  color: var(--white-color-text);
+  color: var(--black-color-text);
   letter-spacing: 0.1rem;
   font-weight: normal;
 }
 
 a:link,
 a:visited {
-  color: var(--white-color-text);
+  color: var(--black-color-text);
   text-decoration: none;
 }
 
 .svg {
   height: 2rem;
   fill: none;
-  stroke: var(--white-color-text);
+  stroke: var(--black-color-text);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 0.15rem;
 }
 
-.text{
-  font-size: 1.3rem;
-  line-height: 120%;
-}
-
-.text--centred{
-  font-size: 1.3rem;
-  text-align: center;
-}
-
-.header{
-  font-size: 1.3rem;
-}
-
 .heading{
   font-size: 4.5rem;
   text-align: center;
+  line-height: 120%;
   @media only screen and (max-width: 500px) {
     font-size: 3.5rem;
   }
@@ -55,4 +42,14 @@ a:visited {
 
 .label--smaller{
   font-size: 1.6rem;
+}
+
+.text{
+  line-height: 120%;
+  font-size: 1.3rem;
+}
+
+.text--centred{
+  font-size: 1.3rem;
+  text-align: center;
 }

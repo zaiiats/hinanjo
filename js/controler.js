@@ -2,6 +2,10 @@
 // import {state} from "./model.js"
 const startPage = async function (state) {};
 
+import CreateEnvironment from "./components/createEnv.js";
+
+
+
 "use sctrict";
 
 let data = {
@@ -168,18 +172,34 @@ let data = {
     ],
   },
   envData : {
-    country:[
-      ['Cor', 'Man', 'El', 'Nor', 'San', 'Bel', 'Vil', 'Al', 'Kar', 'Mon','Lan', 'Dar', 'Ter', 'Gal', 'Bar', 'Fen', 'Mar', 'Riv', 'Sol'],
-      ['land', 'ia', 'ova', 'ton', 'stan', 'ford', 'burg', 'via', 'gan', 'tan','lia', 'nia', 'don', 'var', 'nia', 'dra', 'dor', 'ria', 'fall', 'mere'],
-      ['dor', 'mar', 'an', 'ven', 'lin', 'zor', 'mir', 'tal', 'vin', 'gal','lor', 'ber', 'han', 'ros', 'tin', 'mel', 'nel', 'sal', 'zar', 'ren'],
-    ],
-    city:[
-      ['New', 'Port', 'Lake', 'Green', 'River', 'West', 'East', 'North', 'South', 'Fort','Clear', 'Spring', 'Bright', 'Fair', 'Old', 'Rock', 'Grand', 'High', 'Low', 'Sunny'],
-      ['ton', 'ville', 'burg', 'ford', 'field', 'view', 'wood', 'dale', 'haven', 'side','bridge', 'worth', 'port', 'grove', 'hill', 'bury', 'land', 'way', 'crest', 'valley'],
-    ],
+    country:{
+      name:[
+        ['Cor', 'Man', 'El', 'Nor', 'San', 'Bel', 'Vil', 'Al', 'Kar', 'Mon','Lan', 'Dar', 'Ter', 'Gal', 'Bar', 'Fen', 'Mar', 'Riv', 'Sol'],
+        ['land', 'ia', 'ova', 'ton', 'stan', 'ford', 'burg', 'via', 'gan', 'tan','lia', 'nia', 'don', 'var', 'nia', 'dra', 'dor', 'ria', 'fall', 'mere'],
+        ['dor', 'mar', 'an', 'ven', 'lin', 'zor', 'mir', 'tal', 'vin', 'gal','lor', 'ber', 'han', 'ros', 'tin', 'mel', 'nel', 'sal', 'zar', 'ren'],
+      ],
+      quantity:[
+        {start:5,end:8}
+      ],
+      population:[
+        {start:1,end:7}
+      ],
+    },
+    city:{
+      name:[
+        ['New', 'Port', 'Lake', 'Green', 'River', 'West', 'East', 'North', 'South', 'Fort','Clear', 'Spring', 'Bright', 'Fair', 'Old', 'Rock', 'Grand', 'High', 'Low', 'Sunny'],
+        ['ton', 'ville', 'burg', 'ford', 'field', 'view', 'wood', 'dale', 'haven', 'side','bridge', 'worth', 'port', 'grove', 'hill', 'bury', 'land', 'way', 'crest', 'valley'],
+      ],
+      quantity:[
+        {start:3,end:5}
+      ],
+      population:[
+        {start:1,end:7}
+      ],
+    },
 
     easy : {
-      catastrophy : [
+      catastrophe : [
         {prob:1,value:['Tornado', 'Virus outbreak','Flood', 'Wildfire', 'Drought' , 'Avalanche', 'Hurricane', 'Landslide', 'Sandstorm', 'Uprising']}
       ],
       population: [
@@ -190,10 +210,10 @@ let data = {
       ],
       infrastructure: [
         {start:2,end:5}
-      ]
+      ],
     },
     medium : {
-      catastrophy : [
+      catastrophe : [
         {prob:1,value:['Earthquake', 'Cyclone', 'Chemical spill', 'Radiation leak','Infrastructure collapse','Ozone layer damage',]}
       ],
       population: [
@@ -204,10 +224,10 @@ let data = {
       ],
       infrastructure: [
         {start:5,end:15}
-      ]
+      ],
     },
     hard: {
-      catastrophy : [
+      catastrophe : [
         {prob:1,value:['Volcanic eruption','Tsunami', 'Alien invasion', 'Meteor strike', 'Extreme heat', 'Extreme cold', 'AI rebellion',]}
       ],
       population: [
@@ -218,10 +238,10 @@ let data = {
       ],
       infrastructure: [
         {start:15,end:65}
-      ]
+      ],
     },
     extreme: {
-      catastrophy : [
+      catastrophe : [
         {prob:1,value:['Zombie apocalypse', 'Nuclear disaster',]}
       ],
       population: [
@@ -232,7 +252,7 @@ let data = {
       ],
       infrastructure: [
         {start:65,end:99}
-      ]
+      ],
     },
    
     difficulty : [
@@ -241,21 +261,22 @@ let data = {
       {start:96,end:300,prob:3,value:'hard'},
       {start:300,end:1200,prob:2,value:'extreme'}
     ],
+    population : [
+      {start:3000000000,end:15000000000},
+    ],
   },
 }
 
+let createEnv = new CreateEnvironment(data.envData);
+
 class Game {
   #PlayersCount;
-  #population;
   #players;
   #data;
-  #env;
   #connectFriends = [];
   constructor(data) {
     this.#PlayersCount = 6;
-    this.#population = 8200000000;
     this.#players = [];
-    this.#env;
     this.#connectFriends;
 
     this.#data = data;
@@ -265,7 +286,6 @@ class Game {
   #initGame() {
     console.log("Starting the game...");
     this.#createPlayers();
-    this.#createEnv();
     this.#makeFriends();
     this.#createMap();
     console.log(this.#players);
@@ -293,42 +313,6 @@ class Game {
     
       this.#players.push(player);
     }
-  }
-
-  #createEnv() {
-    const diffArr = this.#createRandomInIntervals(this.#data.envData.difficulty);
-    let diff = diffArr[0];
-    let diffType = diffArr[1];
-
-    const years = Math.floor(diff / 12);
-    const remainingMonths = diff % 12;
-    let result = [];
-    if (years > 0) result.push(`${years} year${years > 1 ? 's' : ''}`)
-    if (remainingMonths > 0) result.push(`${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`)
-
-    let population = this.#population * this.#createRandomInIntervals(this.#data.envData[`${diffType}`].population) / 100;
-    let diedPopulation;
-    population>1000000000?diedPopulation=`${(population/1000000000).toFixed(2)} b.`:diedPopulation=`${(population/1000000).toFixed(2)} m.`;
-
-    let country = '';
-    let city = '';
-    this.#data.envData.country.forEach(part=>{
-      country += this.#randomFunction(part)
-    })
-    this.#data.envData.city.forEach(part=>{
-      city += this.#randomFunction(part)
-    })
-
-    this.#env = {
-      diffType:diffType,
-      diff:diff,
-      catastrophy: this.#createRandomInIntervals(this.#data.envData[`${diffType}`].catastrophy),
-      population: population,
-      infrastructure: this.#createRandomInIntervals(this.#data.envData[`${diffType}`].infrastructure),
-      vegetation: this.#createRandomInIntervals(this.#data.envData[`${diffType}`].vegetation),
-    };
-
-    console.log(`${this.#env.catastrophy} happened in ${country}, ${city}\nWe need to survive for ${result.join(' and ')}, ${diedPopulation} people died, ${this.#env.infrastructure}% of world infrastructure was destroyed, and ${this.#env.vegetation}% of world vegetation was destroyed`);
   }
 
   #randomFunction(data, max, min = 0) {
