@@ -10,8 +10,11 @@ class MapView {
   }
 
   #initMap() {
+    console.log(this.data);
+    this.numOfCities = this.data.activeCountry.cities.length;
+    
     this.percentages = [
-      { type: "ocean", quantity: 20, color: "#" },
+      { type: "ocean", quantity: 20 },
       { type: "lake", quantity: 5 },
       { type: "forest", quantity: 15 },
       { type: "infrastructure", quantity: 5 },
@@ -19,7 +22,7 @@ class MapView {
       { type: "mountain", quantity: 10 },
     ];
 
-    const storedMap = localStorage.getItem("map");
+    /*const storedMap = localStorage.getItem("map");
     if (storedMap) {
       this.mapGrid = JSON.parse(storedMap);
     } else {
@@ -28,44 +31,93 @@ class MapView {
       );
       this.#createMap();
       localStorage.setItem("map", JSON.stringify(this.mapGrid));
-    }
+    }*/
 
-    this.drawMap();
+    this.mapGrid = Array.from({ length: this.height }, () =>
+      Array(this.width).fill("")
+    );
+    //this.#createMap();
+    //this.drawMap();
   }
 
   #createMap() {
-    let cellsToAssign = this.totalCells;
+    this.#initializeBaseTerrain();
+    this.#placeTerrainFeatures()
+
+    this.#getEpicentres();
+
+    console.log(this.closeCities);
+    console.log(this.newEpicentrTypes);
+  }
+
+  #initializeBaseTerrain() {
     let x = 0;
     let y = 0;
 
-    while (cellsToAssign > 0) {
+    for (let i = 0; i < this.totalCells; i++) {
       if (x >= this.width) {
         x = 0;
         y++;
       }
-      if (this.#isOceanCell(x, y) > 0.6) this.mapGrid[y][x] = "water";
-      else if (this.#isOceanCell(x, y) > 0.55) this.mapGrid[y][x] = "sand";
-      else this.mapGrid[y][x] = "field";
-      x++;
-      cellsToAssign--;
-    }
 
-    this.#placeTerrain("forest", 50, 15, 30);
-    this.#placeTerrain("field", 10, 10, 10);
-    this.#placeTerrain("mountain", 2, 20, 21);
-    this.#randomizeMap(30);
-    this.#placeTerrain("water", 3, 10, 10);
-    this.#placeTerrain("agriculture", 7, 7, 20);
-    this.#randomizeMap(5);
-    this.#placeTerrain("infrastructure", 7, 4, 6);
+      this.mapGrid[y][x] = this.#determineBaseTerrain(x, y);
+      x++;
+    }
+  }
+
+  #determineBaseTerrain(x, y) {
+    const distanceFromCenter = this.#isOceanCell(x, y);
+    if (distanceFromCenter > 0.6) return "water";
+    if (distanceFromCenter > 0.55) return "sand";
+    return "field";
   }
 
   #isOceanCell(givenX, givenY) {
     const x = Math.abs(0.5 - givenX / this.width);
     const y = Math.abs(0.5 - givenY / this.height);
     const distanceFromCenter = Math.sqrt(x * x + y * y);
-
     return distanceFromCenter;
+  }
+
+  #placeTerrainFeatures(){
+    this.epicentrTypes = [];
+    this.newEpicentrTypes = {};
+
+    this.#placeClosed(100, 20, 20);
+    this.#placeTerrain("forest", 30, 15, 30);
+    this.#placeTerrain("field", 10, 10, 10);
+    this.#placeTerrain("mountain", Math.round(Math.random() * 3), 5, 20);
+    this.#randomizeMap(70);
+    this.#placeTerrain("water", Math.round(Math.random() * 6 + 1), 3, 5);
+    this.#placeTerrain("agriculture", 15, 5, 10);
+    this.#placeTerrain("animals", 5, 5, 1);
+    this.#randomizeMap(5);
+    this.#placeTerrain("infrastructure", this.numOfCities, 4, 6);
+  }
+
+  #getEpicentres() {
+    this.epicentrTypes.map((epicentr) => {
+      if (epicentr[2] === "field" || epicentr[2] === "forest") return;
+      this.newEpicentrTypes[epicentr[2]] ||= [];
+      this.newEpicentrTypes[epicentr[2]].push([epicentr[0], epicentr[1]]);
+    });
+
+    this.closeCities = [];
+    this.newEpicentrTypes.infrastructure.forEach((city, i) => {
+      this.newEpicentrTypes.infrastructure.forEach((cityIn, j) => {
+        if (i <= j) return;
+        //console.log(
+        //  `distance from ${city} to ${cityIn} ${Math.abs(
+        //    city[0] - cityIn[0]
+        //  )} ${Math.abs(city[1] - cityIn[1])}`
+        //);
+        if (
+          Math.abs(city[0] - cityIn[0]) < 40 &&
+          Math.abs(city[1] - cityIn[1]) < 40
+        )
+          this.closeCities.push([city, cityIn]);
+      });
+    });
   }
 
   drawMap() {
@@ -94,11 +146,54 @@ class MapView {
         this.mapGrid[targetY][targetX] === "forest" ||
         this.mapGrid[targetY][targetX] === "field"
       ) {
+        this.epicentrTypes.push([targetX, targetY, type]);
         const randomSize = Math.round(Math.random() * sizeRange + minSize);
         this.mapGrid[targetY][targetX] = type;
         this.#widenCell(targetX, targetY, type, randomSize);
       } else {
         i--;
+      }
+    }
+  }
+
+  #placeClosed(count, minSize, sizeRange) {
+    const directions = [
+      [0, -1], // Up
+      [-1, 0], // Left
+      [1, 0], // Right
+      [0, 1], // Down
+    ];
+
+    for (let i = 0; i < count; i++) {
+      const x = Math.floor(Math.random() * this.width);
+      const y = Math.floor(Math.random() * this.height);
+
+      const times = Math.round(Math.random() * sizeRange + minSize);
+      this.mapGrid[y][x] = "closed";
+
+      let cellsToExpand = [{ x, y }];
+
+      for (let j = 0; j < times; j++) {
+        const newCells = [];
+
+        for (const cell of cellsToExpand) {
+          const { x, y } = cell;
+
+          for (const [dx, dy] of directions) {
+            const newX = x + dx;
+            const newY = y + dy;
+
+            if (
+              this.#isValidCell(newX, newY) &&
+              this.mapGrid[newY][newX] !== "closed"
+            ) {
+              this.mapGrid[newY][newX] = "closed";
+              newCells.push({ x: newX, y: newY });
+            }
+          }
+        }
+
+        cellsToExpand = newCells;
       }
     }
   }
@@ -138,7 +233,8 @@ class MapView {
         if (type === "forest") {
           if (
             this.mapGrid[newY][newX] === "field" ||
-            type === "infrastructure"
+            type === "infrastructure" ||
+            type === "closed"
           ) {
             this.mapGrid[newY][newX] = type;
             newCells.push({ x: newX, y: newY });
@@ -146,7 +242,8 @@ class MapView {
         } else if (type === "field") {
           if (
             this.mapGrid[newY][newX] === "forest" ||
-            type === "infrastructure"
+            type === "infrastructure" ||
+            type === "closed"
           ) {
             this.mapGrid[newY][newX] = type;
             newCells.push({ x: newX, y: newY });
@@ -178,11 +275,15 @@ class MapView {
       case "forest":
         return "#235c08";
       case "infrastructure":
-        return "#333333";
+        return "#000000";
       case "agriculture":
         return "#FFFF00";
       case "mountain":
         return "#A9A9A9";
+      case "animals":
+        return "#7a6961";
+      case "closed":
+        return "#FFFFFF";
       default:
         return "#FFFFFF";
     }

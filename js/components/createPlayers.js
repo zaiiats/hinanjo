@@ -43,8 +43,6 @@ class CreatePlayers {
     return player;
   }
 
-
-
   #makeFriends() {
     let conectionsNum = Math.floor(this.players.length / 2);
     let randomConectionNum = Math.trunc(Math.random() * 3 + conectionsNum - 2);
@@ -109,11 +107,11 @@ class CreatePlayers {
     for (let arg of args) {
       if (arg.start) {
         if (randomProb < arg.prob) {
-          result = Math.trunc(Math.random() * (arg.end - arg.start) + arg.start);          
+          result = Number(Math.trunc(Math.random() * (arg.end - arg.start) + arg.start));          
           return [result, arg.value];
         }
         if (!arg.prob) {
-          result = (Math.random() * (arg.end - arg.start) + arg.start).toFixed(2);
+          result = Number(Math.random() * (arg.end - arg.start) + arg.start).toFixed(2);
           return result;
         }
         randomProb -= arg.prob;

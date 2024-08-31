@@ -16,6 +16,7 @@ class CreateEnvironment {
     this.#setCatastrophe();
     this.#setPopulation();
     this.#createCountries();
+    this.#setCharacteristics();
     this.#printEnv();
   }
 
@@ -121,6 +122,12 @@ class CreateEnvironment {
     this.env.countries = countries;
   }
 
+  #setCharacteristics(){
+    let populationIndex = this.env.countries.reduce((acc,country) => acc = country.populationIndex,0);
+    console.log(populationIndex);
+    
+  }
+
   #randomFunction(data, max, min = 0) {
     const range = data ? data.length : max;
     const randomNumber = Math.trunc(Math.random() * (range - min) + min);
@@ -135,11 +142,11 @@ class CreateEnvironment {
     for (let arg of args) {
       if (arg.start) {
         if (randomProb < arg.prob) {
-          result = Math.trunc(Math.random() * (arg.end - arg.start) + arg.start);          
+          result = Number(Math.trunc(Math.random() * (arg.end - arg.start) + arg.start));          
           return [result, arg.value];
         }
         if (!arg.prob) {
-          result = (Math.random() * (arg.end - arg.start) + arg.start).toFixed(2);
+          result = Number(Math.random() * (arg.end - arg.start) + arg.start).toFixed(2);
           return result;
         }
         randomProb -= arg.prob;

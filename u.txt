@@ -60,32 +60,8 @@ Defense mechanisms;
 Maintenance requirements;
 
 
-Intervals:
-Age rand([10-20]*2,[20-40]*5,[40-60]*2,[60-90]*1);
-Interval rand([1m-2y]*4,[2y-8y]*3,[8y-25y]*2,[25y-60y*1]);
-Health rand('Fully'*3,'Ill');
-Sex rand('Hetero'*3,'Other');
-if(friends){
-  rand('No'*5)
-  
-}
-if(relative){
+без рук, без ніг, без кінцівок, без пальця, без руки, без ноги, дцп, сіамський близнюк, Віл\Спід, Трупні плями, 'Glaucoma', 
 
-}
+облисіння, біль у руці, біль у нозі, біль у печінці,  
 
-
-
-
-
-
-
-
-
-/        sea:2,
-        lake:4,
-        mountainRanges:0,
-        forestPercent:30,
-        infrastructurePercent:5,
-        agriculturalPercent:9,
-        fieldPercent:50,
-        waterPercent:6,
+?слонове захворювання,
