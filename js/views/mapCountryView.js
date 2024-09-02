@@ -12,7 +12,7 @@ class MapView {
   #initMap() {
     console.log(this.data);
     this.numOfCities = this.data.activeCountry.cities.length;
-    
+
     this.percentages = [
       { type: "ocean", quantity: 20 },
       { type: "lake", quantity: 5 },
@@ -36,32 +36,51 @@ class MapView {
     this.mapGrid = Array.from({ length: this.height }, () =>
       Array(this.width).fill("")
     );
-    //this.#createMap();
-    //this.drawMap();
+    this.#createMap('country');
+    this.drawMap();
   }
 
-  #createMap() {
-    this.#initializeBaseTerrain();
-    this.#placeTerrainFeatures()
-
-    this.#getEpicentres();
-
-    console.log(this.closeCities);
-    console.log(this.newEpicentrTypes);
+  #createMap(state) {
+    //change condition
+    if (state === "country") {
+      this.canvas = document.querySelector(".map__country");
+      this.#initializeBaseTerrain("country");
+      this.#placeTerrainFeatures("country");
+      this.#getEpicentres();
+    } else if (state === "world") {
+      this.canvas = document.querySelector(".map__world");
+      this.#initializeBaseTerrain("world");
+      this.#placeCountries("world");
+    }
   }
 
-  #initializeBaseTerrain() {
-    let x = 0;
-    let y = 0;
+  #initializeBaseTerrain(option) {
+    if (option === "country") {
+      let x = 0;
+      let y = 0;
 
-    for (let i = 0; i < this.totalCells; i++) {
-      if (x >= this.width) {
-        x = 0;
-        y++;
+      for (let i = 0; i < this.totalCells; i++) {
+        if (x >= this.width) {
+          x = 0;
+          y++;
+        }
+
+        this.mapGrid[y][x] = this.#determineBaseTerrain(x, y);
+        x++;
       }
+    } else if (option === "world") {
+      let x = 0;
+      let y = 0;
 
-      this.mapGrid[y][x] = this.#determineBaseTerrain(x, y);
-      x++;
+      for (let i = 0; i < this.totalCells; i++) {
+        if (x >= this.width) {
+          x = 0;
+          y++;
+        }
+
+        this.mapGrid[y][x] = "water";
+        x++;
+      }
     }
   }
 
@@ -79,20 +98,143 @@ class MapView {
     return distanceFromCenter;
   }
 
-  #placeTerrainFeatures(){
+  #placeTerrainFeatures() {
     this.epicentrTypes = [];
     this.newEpicentrTypes = {};
 
-    this.#placeClosed(100, 20, 20);
     this.#placeTerrain("forest", 30, 15, 30);
     this.#placeTerrain("field", 10, 10, 10);
+    this.#placeClosed(100, 20, 20);
     this.#placeTerrain("mountain", Math.round(Math.random() * 3), 5, 20);
     this.#randomizeMap(70);
     this.#placeTerrain("water", Math.round(Math.random() * 6 + 1), 3, 5);
     this.#placeTerrain("agriculture", 15, 5, 10);
     this.#placeTerrain("animals", 5, 5, 1);
     this.#randomizeMap(5);
-    this.#placeTerrain("infrastructure", this.numOfCities, 4, 6);
+    this.#placeInfrastructure();
+  }
+
+  #placeInfrastructure() {
+    let cities = this.data.activeCountry.cities;
+    let maxSize = cities.reduce(
+      (acc, city) =>
+        acc > Number(city.populationIndex) ? acc : Number(city.populationIndex),
+      0
+    );
+    for (let i = 0; i < cities.length; i++) {
+      const targetX = Math.floor(Math.random() * this.width);
+      const targetY = Math.floor(Math.random() * this.height);
+      const distanceFromCenter = this.#isOceanCell(targetX, targetY);
+
+      if (distanceFromCenter < 0.6) {
+        this.epicentrTypes.push([
+          targetX,
+          targetY,
+          "infrastructure",
+          cities[i].name,
+        ]);
+        const size = this.data.activeCountry.cities[i].populationIndex;
+        const relativeSize = Math.round((size / maxSize) * 7);
+
+        this.mapGrid[targetY][targetX] = "infrastructure";
+        this.#widenCell(targetX, targetY, "infrastructure", relativeSize);
+      } else {
+        i--;
+      }
+    }
+  }
+
+  #placeCountries() {
+    this.epicentrTypes = [];
+    this.newEpicentrTypes = {};
+
+    let countries = this.data.countries;
+    let maxSize = countries.reduce(
+      (acc, country) =>
+        acc > Number(country.populationIndex)
+          ? acc
+          : Number(country.populationIndex),
+      0
+    );
+    for (let i = 0; i < countries.length; i++) {
+      const targetX = Math.floor(Math.random() * this.width);
+      const targetY = Math.floor(Math.random() * this.height);
+
+      if (
+        this.#checkDistanceCountry(this.epicentrTypes, targetX, targetY) &&
+        targetX > 20 &&
+        targetY > 20 &&
+        targetX < this.width - 20 &&
+        targetY < this.height - 20
+      ) {
+        this.epicentrTypes.push([
+          targetX,
+          targetY,
+          "country",
+          countries[i].name,
+        ]);
+        const size = this.data.countries[i].populationIndex;
+        const relativeSize = Math.round((size / maxSize) * 25);
+        this.mapGrid[targetY][targetX] = "field";
+
+        this.#widenCountry(targetX, targetY, relativeSize);
+      } else {
+        i--;
+      }
+    }
+  }
+
+  #widenCountry(x, y, size) {
+    let cellsToExpand = [{ x, y }];
+    const center = { x, y };
+
+    for (let i = 0; i < size; i++) {
+      let newCells = [];
+
+      for (let cell of cellsToExpand) {
+        const { x, y } = cell;
+
+        const directions = [
+          [0, -1], // up
+          [-1, 0], // left
+          [1, 0], // right
+          [0, 1], // down
+          [-1, -1], // top-left
+          [1, -1], // top-right
+          [-1, 1], // bottom-left
+          [1, 1], // bottom-right
+        ];
+
+        for (let [dx, dy] of directions) {
+          const newX = x + dx;
+          const newY = y + dy;
+
+          if (
+            newX >= 0 &&
+            newX < this.mapGrid[0].length &&
+            newY >= 0 &&
+            newY < this.mapGrid.length
+          ) {
+            // Calculate the distance from the center
+            const distance = Math.sqrt(
+              (newX - center.x) ** 2 + (newY - center.y) ** 2
+            );
+            if (this.mapGrid[newY][newX] !== "field" && distance <= size / 2) {
+              this.mapGrid[newY][newX] = "field";
+              newCells.push({ x: newX, y: newY });
+            }
+          }
+        }
+      }
+
+      cellsToExpand = newCells;
+    }
+  }
+
+  #checkDistanceCountry(epicentrTypes, x, y) {
+    return !epicentrTypes.some((country) => {
+      return Math.abs(country[0] - x) < 40 && Math.abs(country[1] - y) < 40;
+    });
   }
 
   #getEpicentres() {
@@ -121,8 +263,7 @@ class MapView {
   }
 
   drawMap() {
-    const canvas = document.getElementById("mapCanvas");
-    const ctx = canvas.getContext("2d");
+    const ctx = this.canvas.getContext("2d");
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -275,7 +416,7 @@ class MapView {
       case "forest":
         return "#235c08";
       case "infrastructure":
-        return "#000000";
+        return "#FF0000";
       case "agriculture":
         return "#FFFF00";
       case "mountain":

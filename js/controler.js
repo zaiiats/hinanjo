@@ -5,7 +5,7 @@ const startPage = async function (state) {};
 import CreateEnvironment from "./components/createEnv.js";
 import CreatePlayers from "./components/createPlayers.js";
 
-import MapView from "./views/mapView.js"
+import MapCountryView from "./views/mapCountryView.js"
 
 
 
@@ -37,7 +37,7 @@ let data = {
         {prob:6,value:['Healthy']},
         {prob:4,value:[
           //all
-          'Common Cold', 'Seasonal Allergies', 'Stye', 'Acne', 'Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome','Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression',
+          'Common Cold', 'Seasonal Allergies', 'Stye', 'Acne', 'Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome','Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression', 
           //teen-young
           'Canker Sores', 
           //teen
@@ -46,8 +46,20 @@ let data = {
         {prob:1,value:[
           //all
           'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache','Trigeminal Neuralgia','Cystic Fibrosis',
-          'Lupus'
+          'Lupus', "no hands", "no feet", 'no limbs', 'no finger', 'no arm', "no leg", 'cerebral palsy', 'Siamese twin', 'HIV/AIDS', "cadaveric spots", 'Glaucoma', 
          ]}
+      ],
+      ability: [
+        {id:0,prob:2,value:['none']},
+        {id:1,prob:1,value:[
+          'Can ride a bicycle','Can skateboard or rollerblade','Good at photography', 'Good at DIY projects','Good at drawing','Good at video games', 'Good at sports','Can play a musical instrument', 'Strong social media presence',
+        ]},
+        {id:2,prob:1,value:[
+          'Good communication skills', 'Can work in team', 'Good at problem-solving', 'Good time manager','Leadership skills', 'Adaptable','Good at studying','Can handle stressful situations','Can work under pressure', 'Fast learner', 'Organizational skills', 'Good memory','Good at planning and logistics',  
+        ]},
+        {id:3,prob:1,value:[
+          'Can cook', 'First aid knowledge', 'Gardening skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages',  'Good with animals', 'Tech-savvy', 
+         ]},
       ],
     },
     young : {
@@ -71,11 +83,27 @@ let data = {
         ]},
         {prob:1,value:[
           //all  
-          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus',
+          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus',"no hands", "no feet", 'no limbs', 'no finger', 'no arm', "no leg", 'cerebral palsy', 'Siamese twin', 'HIV/AIDS', "cadaveric spots", 'Glaucoma', 
           //young->end
           'PCOS','Infertility', 
         ]}
       ],
+      ability: [
+        {id:0,prob:2,value:['none']},
+        {id:1,prob:1,value:[
+          'Can ride a bicycle','Can skateboard or rollerblade','Good at photography', 'Good at DIY projects','Good at drawing','Good at video games', 'Good at sports','Can play a musical instrument', 'Strong social media presence',
+        ]},
+        {id:2,prob:1,value:[
+          'Good communication skills', 'Can work in team', 'Good at problem-solving', 'Good time manager','Leadership skills', 'Adaptable','Good at studying','Can handle stressful situations','Can work under pressure', 'Fast learner', 'Organizational skills', 'Good at public speaking','Good memory','Good at planning and logistics',    
+        ]},
+        {id:3,prob:1,value:[
+          'Can drive', 'Can cook', 'First aid knowledge', 'Gardening skills', 'Can manage finances', 'Independent living skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages', 'Good with kids', 'Good with animals', 'Tech-savvy', 
+         ]},
+        {id:4,prob:1,value:[          
+          'Can operate aircraft', 'Fluent in multiple languages', 'Can drive heavy vehicles', 'Can program', 'Can repair electronics','Can repair cars or machinery', 'Good at networking', 'Can sew or knit', 'Can operate ship','Can perfectly navigate using a map',     
+        ]},
+      ],
+      
     },
     adult : {
       profession : [
@@ -96,9 +124,24 @@ let data = {
         ]},
         {prob:1,value:[
           //all
-          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus',            
+          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus', "no hands", "no feet", 'no limbs', 'no finger', 'no arm', "no leg", 'cerebral palsy', 'Siamese twin', 'HIV/AIDS', "cadaveric spots", 'Glaucoma',            
           //adult->end
           'PCOS','Infertility', 'Multiple Sclerosis', 'Heart Disease',        
+        ]},
+      ],
+      ability: [
+        {id:0,prob:2,value:['none']},
+        {id:1,prob:1,value:[
+          'Can ride a bicycle','Can skateboard or rollerblade','Good at photography', 'Good at DIY projects','Good at drawing','Good at video games', 'Good at sports','Can play a musical instrument', 'Strong social media presence',
+        ]},
+        {id:2,prob:1,value:[
+          'Good communication skills', 'Can work in team', 'Good at problem-solving', 'Good time manager','Leadership skills', 'Adaptable','Good at studying','Can handle stressful situations','Can work under pressure', 'Fast learner', 'Organizational skills', 'Good at public speaking','Good memory','Good at planning and logistics',    
+        ]},
+        {id:3,prob:1,value:[
+          'Can drive', 'Can cook', 'First aid knowledge', 'Gardening skills', 'Can manage finances', 'Independent living skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages', 'Good with kids', 'Good with animals', 'Tech-savvy', 
+         ]},
+        {id:4,prob:1,value:[          
+          'Can operate aircraft', 'Fluent in multiple languages', 'Can drive heavy vehicles', 'Can program', 'Can repair electronics','Can repair cars or machinery', 'Good at networking', 'Can sew or knit', 'Can operate ship','Can perfectly navigate using a map',     
         ]},
       ],
     },
@@ -124,11 +167,26 @@ let data = {
           ]},
         {prob:1,value:[
           //all
-          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus', 
+          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus', "no hands", "no feet", 'no limbs', 'no finger', 'no arm', "no leg", 'cerebral palsy', 'Siamese twin', 'HIV/AIDS', "cadaveric spots", 'Glaucoma', 
           //adult->end
           'PCOS','Infertility', 'Multiple Sclerosis', 'Heart Disease',
           //seniour->end
           'Parkinson\'s Disease', 'Stroke', 'Congestive Heart Failure',        
+        ]},
+      ],
+      ability: [
+        {id:0,prob:2,value:['none']},
+        {id:1,prob:1,value:[
+          'Can ride a bicycle','Can skateboard or rollerblade','Good at photography', 'Good at DIY projects','Good at drawing','Good at video games', 'Good at sports','Can play a musical instrument', 'Strong social media presence',
+        ]},
+        {id:2,prob:1,value:[
+          'Good communication skills', 'Can work in team', 'Good at problem-solving', 'Good time manager','Leadership skills', 'Adaptable','Good at studying','Can handle stressful situations','Can work under pressure', 'Fast learner', 'Organizational skills', 'Good at public speaking','Good memory','Good at planning and logistics',    
+        ]},
+        {id:3,prob:1,value:[
+          'Can drive', 'Can cook', 'First aid knowledge', 'Gardening skills', 'Can manage finances', 'Independent living skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages', 'Good with kids', 'Good with animals', 'Tech-savvy', 
+         ]},
+        {id:4,prob:1,value:[          
+          'Can operate aircraft', 'Fluent in multiple languages', 'Can drive heavy vehicles', 'Can program', 'Can repair electronics','Can repair cars or machinery', 'Good at networking', 'Can sew or knit', 'Can operate ship','Can perfectly navigate using a map',     
         ]},
       ],
     },
@@ -155,13 +213,28 @@ let data = {
         ]},
         {prob:1,value:[
           //all
-          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus',            
+          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache', 'Trigeminal Neuralgia','Cystic Fibrosis','Lupus', "no hands", "no feet", 'no limbs', 'no finger', 'no arm', "no leg", 'cerebral palsy', 'Siamese twin', 'HIV/AIDS', "cadaveric spots", 'Glaucoma',  
           //adult->end
           'PCOS','Infertility', 'Multiple Sclerosis', 'Heart Disease',
           //seniour->end
           'Parkinson\'s Disease', 'Stroke', 'Congestive Heart Failure',         
           //old
           'Alzheimer\'s Disease', 'Emphysema',
+        ]},
+      ],
+      ability: [
+        {id:0,prob:2,value:['none']},
+        {id:1,prob:1,value:[
+          'Can ride a bicycle','Can skateboard or rollerblade','Good at photography', 'Good at DIY projects','Good at drawing','Good at video games', 'Good at sports','Can play a musical instrument', 'Strong social media presence',
+        ]},
+        {id:2,prob:1,value:[
+          'Good communication skills', 'Can work in team', 'Good at problem-solving', 'Good time manager','Leadership skills', 'Adaptable','Good at studying','Can handle stressful situations','Can work under pressure', 'Fast learner', 'Organizational skills', 'Good at public speaking','Good memory','Good at planning and logistics',    
+        ]},
+        {id:3,prob:1,value:[
+          'Can drive', 'Can cook', 'First aid knowledge', 'Gardening skills', 'Can manage finances', 'Independent living skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages', 'Good with kids', 'Good with animals', 'Tech-savvy', 
+         ]},
+        {id:4,prob:1,value:[          
+          'Can operate aircraft', 'Fluent in multiple languages', 'Can drive heavy vehicles', 'Can program', 'Can repair electronics','Can repair cars or machinery', 'Good at networking', 'Can sew or knit', 'Can operate ship','Can perfectly navigate using a map',     
         ]},
       ],
     },
@@ -173,6 +246,13 @@ let data = {
       {start:40,end:60,prob:2,value:'seniour'},
       {start:60,end:90,prob:1,value:'old'},
     ],
+    cantBeTogether : {
+      health:[
+        ['Basic cooking skills', 'Can cook',],
+        ['Basic gardening skills','Gardening skills'],
+        ['Can drive', 'Can drive heavy vehicles'],
+      ]
+    }
   },
   envData : {
     country:{
@@ -182,7 +262,7 @@ let data = {
         ['dor', 'mar', 'an', 'ven', 'lin', 'zor', 'mir', 'tal', 'vin', 'gal','lor', 'ber', 'han', 'ros', 'tin', 'mel', 'nel', 'sal', 'zar', 'ren'],
       ],
       quantity:[
-        {start:5,end:8}
+        {start:10,end:15}
       ],
       population:[
         {start:1,end:7}
@@ -194,7 +274,7 @@ let data = {
         ['ton', 'ville', 'burg', 'ford', 'field', 'view', 'wood', 'dale', 'haven', 'side','bridge', 'worth', 'port', 'grove', 'hill', 'bury', 'land', 'way', 'crest', 'valley'],
       ],
       quantity:[
-        {start:3,end:5}
+        {start:5,end:15}
       ],
       population:[
         {start:1,end:7}
@@ -283,8 +363,28 @@ let data = {
       {start:300,end:1200,prob:2,value:'extreme'}
     ],
     population : [
-      {start:3000000000,end:15000000000},
+      {start:300000000,end:1500000000},
     ],
+
+    featureProbability : {
+      disease:[
+        {prob:3,value:1},
+        {prob:2,value:2},
+        {prob:1,value:3},
+      ],
+      // health:[
+      //   {prob:3,value:1},
+      //   {prob:2,value:2},
+      //   {prob:1,value:3},
+      // ],
+      // health:[
+      //   {prob:3,value:1},
+      //   {prob:2,value:2},
+      //   {prob:1,value:3},
+      // ],
+    },
+
+    
   },
 }
 
@@ -300,7 +400,7 @@ class Game {
     let createEnv = new CreateEnvironment(data.envData);
     this.env = createEnv.env
     let createPlayers = new CreatePlayers(data.userData);
-    let mapView = new MapView(this.env);
+    let mapCountryView = new MapCountryView(this.env);
     //console.log(createEnv.env.text);
     console.log(createPlayers.players);
     

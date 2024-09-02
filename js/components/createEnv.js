@@ -89,19 +89,19 @@ class CreateEnvironment {
 
   #createCountries(){
     let countries = [];
+    this.existingNames = {
+      countries: new Set(),
+      cities: new Set(),
+    };
     const numOfCountries = Math.round(this.#createRandomInIntervals(this.#data.country.quantity));
 
     for (let i = 0; i < numOfCountries; i++) {
-      const countryName = this.#data.country.name
-        .map(part => this.#randomFunction(part))
-        .join('');
+      const countryName = this.#generateUniqueName(this.#data.country.name,'countries');
 
       const countryPopulationIndex = this.#createRandomInIntervals(this.#data.country.population);
       const numOfCities = Math.round(this.#createRandomInIntervals(this.#data.city.quantity));
       const cities = Array.from({ length: numOfCities }, () => {
-        const cityName = this.#data.city.name
-          .map(part => this.#randomFunction(part))
-          .join('');
+        const cityName = this.#generateUniqueName(this.#data.city.name,"cities");
         const cityPopulationIndex = this.#createRandomInIntervals(this.#data.city.population);
         return { name: cityName, populationIndex: cityPopulationIndex };
       });
@@ -122,10 +122,30 @@ class CreateEnvironment {
     this.env.countries = countries;
   }
 
+  #generateUniqueName(nameParts, type) {
+    let uniqueName;
+    do {
+      uniqueName = nameParts
+        .map(part => this.#randomFunction(part))
+        .join('');
+    } while (this.existingNames[type].has(uniqueName));
+
+    this.existingNames[type].add(uniqueName);
+    return uniqueName;
+  }
+
   #setCharacteristics(){
-    let populationIndex = this.env.countries.reduce((acc,country) => acc = country.populationIndex,0);
-    console.log(populationIndex);
     
+    let populationIndexCountry = this.env.countries.reduce((acc,country) => acc += parseFloat(country.populationIndex),0);
+    this.env.countries.forEach(country => {
+      country.population = (this.env.population / populationIndexCountry) * country.populationIndex
+      
+      let populationIndexCity = country.cities.reduce((acc,city) => acc += parseFloat(city.populationIndex),0);
+      country.cities.forEach(city => {
+        city.population = (country.population / populationIndexCity) * city.populationIndex        
+      })
+    })
+
   }
 
   #randomFunction(data, max, min = 0) {
