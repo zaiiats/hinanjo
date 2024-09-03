@@ -14,12 +14,12 @@ Enemies
 
 
 Fieds:
-Name & surname;
-Health;
+//Name & surname;
+//Health;
 Weight & height;
-Sex & orientation;
-Profession;
-Luggage;
+//Sex & orientation;
+//Profession;
+//Luggage;
 Behaviour;
 Specific needs;
 Consuming resources;
