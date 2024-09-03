@@ -37,7 +37,7 @@ let data = {
         {prob:6,value:['Healthy']},
         {prob:4,value:[
           //all
-          'Common Cold', 'Seasonal Allergies', 'Stye', 'Acne', 'Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome','Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression', 
+          'Common Cold', 'Seasonal Allergies', 'Stye', 'Acne', 'Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome','Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression', 'pain in arm', 'pain in leg', 'pain in liver', 'alopecia',
           //teen-young
           'Canker Sores', 
           //teen
@@ -58,9 +58,21 @@ let data = {
           'Good communication skills', 'Can work in team', 'Good at problem-solving', 'Good time manager','Leadership skills', 'Adaptable','Good at studying','Can handle stressful situations','Can work under pressure', 'Fast learner', 'Organizational skills', 'Good memory','Good at planning and logistics',  
         ]},
         {id:3,prob:1,value:[
-          'Can cook', 'First aid knowledge', 'Gardening skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages',  'Good with animals', 'Tech-savvy', 
-         ]},
+          'Can cook', 'First aid knowledge', 'Gardening skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages', 'Good with animals', 'Tech-savvy', 
+          'Can perfectly navigate using a map', 'Can sew or knit',
+        ]},
+      ]
+      // abilities -> can open locks, 
+      fears = [
+        "Acrophobia (Fear of heights)", "Arachnophobia (Fear of spiders)", "Aviophobia (Fear of flying)", "Claustrophobia (Fear of confined spaces)", "Ophidiophobia (Fear of snakes)", "Glossophobia (Fear of public speaking)", "Nyctophobia (Fear of the dark)", "Atychiphobia (Fear of failure)", "Mysophobia (Fear of germs)", "Thanatophobia (Fear of death)", "Anthophobia (Fear of flowers)", "Trypanophobia (Fear of needles)", "Aquaphobia (Fear of water)", "Coulrophobia (Fear of clowns)", "Phasmophobia (Fear of ghosts)", "Autophobia (Fear of being alone)", "Agoraphobia (Fear of losing control in public spaces)", "Metathesiophobia (Fear of change)", "Enochlophobia (Fear of crowds)", "Xenophobia (Fear of the unknown or strangers)",
       ],
+      luggage:[
+        "Survival knife", "Multi-tool (with pliers, screwdrivers, etc.)", "First aid kit", "Book on survival techniques", "Water purification tablets", "Portable water filter", "Compass", "Map with marked shelters", "Fire starter (e.g., flint and steel, waterproof matches)", "Rope or paracord", "Thermal blanket", "Portable solar charger", "Hand-crank flashlight", "Emergency radio", "Duct tape", "Whistle for signaling", "Compact fishing kit", "Folding shovel", "Tarp or emergency shelter", "Zip ties", "Non-perishable food (e.g., energy bars, dried fruit)", "Extra clothing layers", "Hiking boots or durable footwear", "Binoculars", "Gloves (e.g., work gloves, thermal gloves)", "Sewing kit", "Pocket-sized notepad and pencil", "Personal identification documents", "Portable stove or fuel tablets", "Small cooking pot or mess kit", "Folding saw or hatchet", "Camouflage netting", "Signal mirror", "Siphon pump", "Portable water container", "Hand sanitizer", "Emergency contact list", "Lockpick set (for emergencies)", "Small crowbar", "Sunglasses (for eye protection)", "Headlamp", "Mosquito net", "Small pry bar", "Tactical pen", "Poncho", "Body armor (for dangerous situations)", "Portable power bank", "Anti-bacterial wipes", "Goggles", "Gas mask", "Protective helmet", "Walkie-talkies", "Reflective tape", "Spray paint (for marking locations)", "Hiking poles", "Canteen", "Wind-up alarm clock", "Inflatable pillow", "Portable camping chair", "Cooking utensils", "Waterproof document holder", "Condoms (can be used for water storage or other purposes)", "Bear spray", "Tinder box", "Folding bicycle", "Portable heater", "Medication supply (prescription and over-the-counter)", "Emergency cash stash", "Heat packs", "Small fire extinguisher", "Cable ties", "Disinfectant", "Fishing net", "Portable toilet kit", "Pepper spray", "Handheld GPS device", "Small anemometer (to measure wind speed)", "Climbing gear (carabiners, harness)", "Portable shower", "Smoke grenades", "Emergency flares", "Survival whistle with built-in compass", "Night vision goggles", "Sleeping bag",
+      ],
+      behaviour:[
+
+      ],
+
     },
     young : {
       profession : [
@@ -76,6 +88,7 @@ let data = {
         {prob:3,value:[
           //all
           'Common Cold', 'Seasonal Allergies', 'Stye','Acne','Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters', 'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough',  'Chronic Fatigue Syndrome','Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression',
+          'pain in arm', 'pain in leg', 'pain in liver', 'alopecia',
           //teen-young
           'Canker Sores',
           //young->end
@@ -100,7 +113,7 @@ let data = {
           'Can drive', 'Can cook', 'First aid knowledge', 'Gardening skills', 'Can manage finances', 'Independent living skills', 'Not scared of blood','High energy','Quick reflexes','Good at mentoring','Can perfectly swim', 'Can teach others', 'Basic cooking skills', 'Basic gardening skills', 'Know 2 languages', 'Good with kids', 'Good with animals', 'Tech-savvy', 
          ]},
         {id:4,prob:1,value:[          
-          'Can operate aircraft', 'Fluent in multiple languages', 'Can drive heavy vehicles', 'Can program', 'Can repair electronics','Can repair cars or machinery', 'Good at networking', 'Can sew or knit', 'Can operate ship','Can perfectly navigate using a map',     
+          'Can operate aircraft', 'Fluent in multiple languages', 'Can drive heavy vehicles', 'Can program', 'Can repair electronics','Can repair cars or machinery', 'Good at networking', 'Can sew or knit', 'Can operate ship',    
         ]},
       ],
       
@@ -119,6 +132,7 @@ let data = {
         {prob:3,value:[
           //all
           'Common Cold', 'Seasonal Allergies', 'Stye','Acne','Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome', 'Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression',          
+          'pain in arm', 'pain in leg', 'pain in liver', 'alopecia',
           //adult-> end
           'Borderline Personality Disorder', 'Mild Hypertension' ,'Tension Headache', 'Addison\'s Disease','Fibromyalgia', 'Rheumatoid Arthritis','Macular Degeneration', 'Cataracts', 'Arthritis', 'Glaucoma',        
         ]},
@@ -160,6 +174,7 @@ let data = {
         {prob:3,value:[
           //all
           'Common Cold', 'Seasonal Allergies', 'Stye','Acne','Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome', 'Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression',
+          'pain in arm', 'pain in leg', 'pain in liver', 'alopecia',
           //adult-> end
           'Borderline Personality Disorder', 'Mild Hypertension' ,'Tension Headache', 'Addison\'s Disease','Fibromyalgia', 'Rheumatoid Arthritis','Macular Degeneration', 'Cataracts', 'Arthritis',
           //seniour->end
@@ -204,6 +219,7 @@ let data = {
         {prob:2,value:[
           //all
           'Common Cold', 'Seasonal Allergies', 'Stye','Acne','Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome', 'Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression',
+          'pain in arm', 'pain in leg', 'pain in liver', 'alopecia',
           //adult-> end
           'Borderline Personality Disorder', 'Mild Hypertension' ,'Tension Headache', 'Addison\'s Disease','Fibromyalgia', 'Rheumatoid Arthritis','Macular Degeneration', 'Cataracts', 'Arthritis',
           //seniour->end
@@ -247,11 +263,11 @@ let data = {
       {start:60,end:90,prob:1,value:'old'},
     ],
     cantBeTogether : {
-      health:[
+      ability:[
         ['Basic cooking skills', 'Can cook',],
         ['Basic gardening skills','Gardening skills'],
         ['Can drive', 'Can drive heavy vehicles'],
-      ]
+      ],
     }
   },
   envData : {

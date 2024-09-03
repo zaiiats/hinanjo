@@ -21,10 +21,10 @@ Sex & orientation;
 Profession;
 Luggage;
 Behaviour;
-Skills;
 Specific needs;
 Consuming resources;
 Information;
+Skills;
 Abilities
 Trust level;
 ACHIEVEMENTS
@@ -60,7 +60,3 @@ Defense mechanisms;
 Maintenance requirements;
 
 Люди які можуть мати певні характеристики можуть протидіяти певній катастрофі
-
-без рук, без ніг, без кінцівок, без пальця, без руки, без ноги, дцп, сіамський близнюк, Віл\Спід, Трупні плями, 'Glaucoma', 
-
-облисіння, біль у руці, біль у нозі, біль у печінці,
