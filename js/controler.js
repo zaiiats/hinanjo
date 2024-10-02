@@ -37,16 +37,17 @@ let data = {
         {prob:6,value:['Healthy']},
         {prob:4,value:[
           //all
-          'Common Cold', 'Seasonal Allergies', 'Stye', 'Acne', 'Mild Acne', 'Nosebleed', 'Mild Eczema', 'Gingivitis', 'Cold Sores', 'Bruises', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Sunburn', 'Blisters',  'Stuttering', 'Mild Asthma', 'Mild Depression', 'Mild Anxiety','Heartburn','Carpal Tunnel Syndrome', 'Mild Insomnia', 'Minor Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome','Obesity','Anorexia Nervosa','Bulimia Nervosa','Thyroid Disorder','Hyperthyroidism', 'Hypothyroidism','Anxiety Disorder','Depression', 'pain in arm', 'pain in leg', 'pain in liver', 'alopecia',
-          //teen-young
-          'Canker Sores', 
-          //teen
-          'ADHD','Tonsillitis', 'Selective Mutism','Auditory Processing Disorder',
+          'Common Cold', 'Seasonal Allergies', 'Stye', 'Acne', 'Chronic Nosebleed', 'Eczema', 'Gingivitis', 'Cold Sores', 'Sinusitis', 'Warts', 'Sprained Ankle', 'Scoliosis', 'Athlete\'s Foot','Eye Twitch', 'Burn', 'Stuttering', 'Heartburn', 'Carpal Tunnel Syndrome', 'Insomnia', 'Back Pain','Constipation', 'Chronic Cough', 'Chronic Fatigue Syndrome','Thyroid Disorder', 'Anxiety Disorder', 'Depression', 'Alopecia', 'ADHD','Tonsillitis', 'Selective Mutism'
+        ]},
+        // genetic disiases
+        {prob:1, value: [
+          'Down syndrom', 'Autism Spectrum Disorder', 'Albinism', 'Galactosymia', 'Gigantism', 'Dwarfism', 'Siamese Twin', 
         ]},
         {prob:1,value:[
           //all
-          'Ringworm','Dyslexia','Cancer','Down syndrom','Diabetes','Autism Spectrum Disorder','Asthma','Panic Disorder','Migraine','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease','Irritable Bowel Syndrome (IBS)','Cluster Headache','Trigeminal Neuralgia','Cystic Fibrosis',
-          'Lupus', "no hands", "no feet", 'no limbs', 'no finger', 'no arm', "no leg", 'cerebral palsy', 'Siamese twin', 'HIV/AIDS', "cadaveric spots", 'Glaucoma', 
+          'Ringworm','Dyslexia','Cancer','Diabetes','Asthma','Panic Disorder', 'Migraine', 'Obesity','Anorexia Nervosa','Bulimia Nervosa','Bipolar Disorder','Schizophrenia','Epilepsy','Celiac Disease', 'Cluster Headache', 'Lupus', "No hands", "No feet", 'No limbs', 'No finger', 'No arm', "No leg", 'Cerebral Palsy', 'HIV/AIDS', 
+          // regular or genetic?
+          'Blind', 'Deaf', 'Numb', 'Deaf-mute'
          ]}
       ],
       ability: [
